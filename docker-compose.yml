@@ -1,0 +1,45 @@
+services:
+
+  frontend:
+    image: lakshmipriya08/eventorganizer:frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+  backend:
+    image: lakshmipriya08/eventorganizer:backend
+    ports:
+     - "3000:3000"
+    environment:
+     - MYSQL_HOST=mysql
+     - MYSQL_USER=user
+     - MYSQL_PASSWORD=password
+     - MYSQL_DATABASE=eventsdb
+    depends_on:
+     - mysql
+
+  mysql:
+   image: mysql:8.0
+   ports:
+    - "3306:3306"
+   volumes:
+    - mysql_data:/var/lib/mysql
+    - ./mysqlDB/init:/docker-entrypoint-initdb.d  
+   environment:
+    - MYSQL_ROOT_PASSWORD=rootpassword
+    - MYSQL_DATABASE=eventsdb
+    - MYSQL_USER=user
+    - MYSQL_PASSWORD=password
+  
+  adminer:
+    image: adminer
+    ports:
+     - "8081:8080"
+    depends_on:
+     - mysql
+
+
+volumes:
+  mysql_data:
+
