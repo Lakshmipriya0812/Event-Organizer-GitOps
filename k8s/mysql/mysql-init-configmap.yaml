@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-init
+data:
+  schema-user.sql: |
+    -- Create database
+    CREATE DATABASE IF NOT EXISTS eventdb;
+
+    -- Create dedicated user
+    CREATE USER IF NOT EXISTS 'user'@'%' IDENTIFIED BY 'password';
+
+    -- Grant privileges
+    GRANT ALL PRIVILEGES ON eventdb.* TO 'user'@'%';
+    FLUSH PRIVILEGES;
+
+    -- Create table
+    USE eventdb;
+    CREATE TABLE IF NOT EXISTS events (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      date DATE NOT NULL
+    );
