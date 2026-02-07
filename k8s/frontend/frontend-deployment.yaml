@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: lakshmipriya08/eventorganizer:frontend
+          image: lakshmipriya08/eventorganizer:frontend-2e00cbab2024d2574de95eb4509ca3d2e504cc5a
           ports:
             - containerPort: 80
 
